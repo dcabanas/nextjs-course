@@ -1,1 +1,1 @@
-# nextjs-course
+# Next.js + React Course
