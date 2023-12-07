@@ -1,9 +1,21 @@
+/*
+    layout.js and page.js are nextjs reserved filenames
+
+    this component is a server componente, runs in the server and
+    sends the JSX to the client
+
+    more routes can be added via file-routing system: we create folders
+    inside the app folder and each sub-folder gets its page.js file
+ */
+import Link from 'next/link'
+import Header from '@/components/header'
+
 export default function Home() {
-  return (
-    <main>
-      <img src="/logo.png" alt="A server surrounded by magic sparkles." />
-      <h1>Welcome to this NextJS Course!</h1>
-      <p>🔥 Let&apos;s get started! 🔥</p>
-    </main>
-  );
+    return (
+        <main>
+            <Header/>
+            <p>🔥 Let&apos;s get started! 🔥</p>
+            <p><Link href="about">About Us</Link></p>
+        </main>
+    )
 }
