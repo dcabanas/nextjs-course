@@ -23,7 +23,7 @@ export default function MainHeader() {
         <>
             <MainHeaderBackground/>
             <header className={classes.header}>
-                <Link className={classes.logo} href="/foodies-starting-project/public">
+                <Link className={classes.logo} href="/">
                     {/*<img src="@/assets/logo.png"/>*/}
                     {/*<img src={logoImg.src} alt="A plate with food on it"/>*/}
                     <Image src={logoImg} alt="A plate with food on it" priority/>
