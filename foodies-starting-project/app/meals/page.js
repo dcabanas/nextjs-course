@@ -5,6 +5,11 @@ import { getMeals } from '@/lib/meals'
 import { Suspense } from 'react'
 import LoadingMealsPage from '@/app/meals/loading-out'
 
+export const metadata = {
+    title: 'All Meals',
+    description: 'Browse the delicious meals shared by our vibrant community.'
+}
+
 /*
     Server components in NextJS can be async and fetch data directly to a remote db
     Everytime we visit a page NextJS caches it and any data it might contain
@@ -25,7 +30,7 @@ export default function MealsPage() {
                 </h1>
                 <p>Choose your favourite recipe and cook it yourself. It is easy and fun!</p>
                 <p className={classes.cta}>
-                    <Link href="meals/share">
+                    <Link href="/meals/share">
                         Share Your Favourite Recipe
                     </Link>
                 </p>

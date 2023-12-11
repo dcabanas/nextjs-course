@@ -26,11 +26,11 @@ export async function saveMeal(meal) {
 
     stream.write(Buffer.from(bufferedImage), (error) => {
         if (error) {
-            throw new Error('Saving imge failed!')
+            throw new Error('Saving image failed!')
         }
     })
 
-    meal.imge = `/images/${fileName}`
+    meal.image = `/images/${fileName}`
 
     db.prepare(`
         INSERT INTO meals
