@@ -1,5 +1,5 @@
 /*
-    layout2.js and page.js are nextjs reserved filenames
+    layout.js and page.js are nextjs reserved filenames
 
     this component is a server componente, runs in the server and
     sends the JSX to the client
