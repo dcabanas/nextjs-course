@@ -1,40 +1,57 @@
-import { Fragment } from 'react';
-import { useRouter } from 'next/router';
+import EventSummary from '../../components/event-detail/event-summary'
+import EventLogistics from '../../components/event-detail/event-logistics'
+import EventContent from '../../components/event-detail/event-content'
+import { getFeaturedEvents, getEventById } from '../../util/api'
 
-import { getEventById } from '../../dummy-data';
-import EventSummary from '../../components/event-detail/event-summary';
-import EventLogistics from '../../components/event-detail/event-logistics';
-import EventContent from '../../components/event-detail/event-content';
-import ErrorAlert from '../../components/ui/error-alert';
+function EventDetailPage({ selectedEvent }) {
+    const event = selectedEvent
 
-function EventDetailPage() {
-  const router = useRouter();
+    if (!event) {
+        return (
+           <div className="center">
+               <p>Loading...</p>
+           </div>
+        )
+    }
 
-  const eventId = router.query.eventId;
-  const event = getEventById(eventId);
-
-  if (!event) {
     return (
-      <ErrorAlert>
-        <p>No event found!</p>
-      </ErrorAlert>
-    );
-  }
-
-  return (
-    <Fragment>
-      <EventSummary title={event.title} />
-      <EventLogistics
-        date={event.date}
-        address={event.location}
-        image={event.image}
-        imageAlt={event.title}
-      />
-      <EventContent>
-        <p>{event.description}</p>
-      </EventContent>
-    </Fragment>
-  );
+        <>
+            <EventSummary title={event.title}/>
+            <EventLogistics
+                date={event.date}
+                address={event.location}
+                image={event.image}
+                imageAlt={event.title}
+            />
+            <EventContent>
+                <p>{event.description}</p>
+            </EventContent>
+        </>
+    )
 }
 
-export default EventDetailPage;
+export async function getStaticProps(context) {
+    const eventId = context.params.eventId
+    const event = await getEventById(eventId)
+
+    return {
+        props: {
+            selectedEvent: event
+        },
+        revalidate: 30
+    }
+}
+
+export async function getStaticPaths() {
+    const allEvents = await getFeaturedEvents()
+    const pathsWithParams = allEvents.map(event => ({
+        params: { eventId: event.id }
+    }))
+
+    return {
+        paths: pathsWithParams,
+        fallback: true
+    }
+}
+
+export default EventDetailPage
