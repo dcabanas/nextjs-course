@@ -32,8 +32,8 @@ export default NextAuth({
                 const client = await connectToDatabase()
                 const db = client.db()
 
-                const existingUser = await db.collection('users').findOne({email: credentials.email})
-                if (!existingUser) {
+                const user = await db.collection('users').findOne({email: credentials.email})
+                if (!user) {
                     await client.close()
                     /*
                         Everytime an exception is thrown NextAuth rejects
@@ -45,7 +45,7 @@ export default NextAuth({
                     throw new Error('No user found!')
                 }
 
-                const isValid = await verifyPassword(credentials.password, existingUser.password)
+                const isValid = await verifyPassword(credentials.password, user.password)
                 if (!isValid) {
                     await client.close()
                     throw new Error('Could not log you in!')
@@ -57,7 +57,7 @@ export default NextAuth({
                     the operation succeded and this object will be
                     encoded as a JWT
                  */
-                return {email: existingUser.email}
+                return {email: user.email}
             }
         })
     ]
